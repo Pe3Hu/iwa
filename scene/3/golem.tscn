@@ -1,0 +1,104 @@
+[gd_scene load_steps=4 format=3 uid="uid://wvtrityl05ur"]
+
+[ext_resource type="Script" path="res://scene/3/golem.gd" id="1_lamdb"]
+[ext_resource type="PackedScene" uid="uid://ciw38iqel0v5a" path="res://scene/0/icon.tscn" id="2_0wlb2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7paps"]
+
+[node name="Golem" type="MarginContainer"]
+custom_minimum_size = Vector2(5, 5)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_lamdb")
+
+[node name="BG" type="Panel" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7paps")
+
+[node name="Enchantments" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Diagram" type="VBoxContainer" parent="Enchantments"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Sacrifices" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="VBox" type="VBoxContainer" parent="Sacrifices"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Essences" type="VBoxContainer" parent="Sacrifices/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Threats" type="VBoxContainer" parent="Sacrifices/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Gifts" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="VBox" type="VBoxContainer" parent="Gifts"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Essences" type="VBoxContainer" parent="Gifts/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Effects" type="VBoxContainer" parent="Gifts/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Tags" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="Icons" type="GridContainer" parent="Tags"]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 2
+
+[node name="Criterion" parent="Tags/Icons" instance=ExtResource("2_0wlb2")]
+layout_mode = 2
+
+[node name="Rank" parent="Tags/Icons" instance=ExtResource("2_0wlb2")]
+layout_mode = 2
+
+[node name="Type" parent="Tags/Icons" instance=ExtResource("2_0wlb2")]
+visible = false
+layout_mode = 2
+
+[node name="Subtype" parent="Tags/Icons" instance=ExtResource("2_0wlb2")]
+layout_mode = 2
