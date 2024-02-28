@@ -1,0 +1,204 @@
+[
+ {
+  "index": 0,
+  "magic title": "rune",
+  "magic kind": "small",
+  "value": "a"
+ },
+ {
+  "index": 1,
+  "magic title": "rune",
+  "magic kind": "small",
+  "value": "b"
+ },
+ {
+  "index": 2,
+  "magic title": "rune",
+  "magic kind": "small",
+  "value": "c"
+ },
+ {
+  "index": 3,
+  "magic title": "rune",
+  "magic kind": "small",
+  "value": "d"
+ },
+ {
+  "index": 4,
+  "magic title": "rune",
+  "magic kind": "small",
+  "value": "e"
+ },
+ {
+  "index": 5,
+  "magic title": "rune",
+  "magic kind": "medium",
+  "value": "m"
+ },
+ {
+  "index": 6,
+  "magic title": "rune",
+  "magic kind": "medium",
+  "value": "n"
+ },
+ {
+  "index": 7,
+  "magic title": "rune",
+  "magic kind": "medium",
+  "value": "o"
+ },
+ {
+  "index": 8,
+  "magic title": "rune",
+  "magic kind": "medium",
+  "value": "p"
+ },
+ {
+  "index": 9,
+  "magic title": "rune",
+  "magic kind": "large",
+  "value": "x"
+ },
+ {
+  "index": 10,
+  "magic title": "rune",
+  "magic kind": "large",
+  "value": "y"
+ },
+ {
+  "index": 11,
+  "magic title": "rune",
+  "magic kind": "large",
+  "value": "z"
+ },
+ {
+  "index": 12,
+  "magic title": "seal",
+  "magic kind": "small",
+  "type": "near",
+  "subtype": "ally",
+  "criterion": "count",
+  "impact": "equal",
+  "value": 1
+ },
+ {
+  "index": 13,
+  "magic title": "seal",
+  "magic kind": "medium",
+  "type": "near",
+  "subtype": "enemy",
+  "criterion": "count",
+  "impact": "exceed",
+  "value": 2
+ },
+ {
+  "index": 14,
+  "magic title": "seal",
+  "magic kind": "large",
+  "type": "near",
+  "subtype": "void",
+  "criterion": "count",
+  "impact": "exceed",
+  "value": 0
+ },
+ {
+  "index": 15,
+  "magic title": "spell",
+  "magic kind": "small",
+  "type": "quadrant",
+  "subtype": "ally",
+  "criterion": "diagram",
+  "impact": "increase",
+  "value": 1
+ },
+ {
+  "index": 16,
+  "magic title": "spell",
+  "magic kind": "small",
+  "type": "quadrant",
+  "subtype": "enemy",
+  "criterion": "diagram",
+  "impact": "reduce",
+  "value": 1
+ },
+ {
+  "index": 17,
+  "magic title": "spell",
+  "magic kind": "medium",
+  "type": "quadrant",
+  "subtype": "enemy",
+  "criterion": "health",
+  "impact": "reduce",
+  "value": 3
+ },
+ {
+  "index": 18,
+  "magic title": "spell",
+  "magic kind": "large",
+  "type": "quadrant",
+  "subtype": "all",
+  "criterion": "diagram",
+  "impact": "balance",
+  "value": 3
+ },
+ {
+  "index": 19,
+  "magic title": "ritual",
+  "magic kind": "small",
+  "type": "himself",
+  "subtype": "himself",
+  "criterion": "health",
+  "impact": "reduce",
+  "value": 7
+ },
+ {
+  "index": 20,
+  "magic title": "ritual",
+  "magic kind": "medium",
+  "type": "himself",
+  "subtype": "himself",
+  "criterion": "health",
+  "impact": "reduce",
+  "value": 5
+ },
+ {
+  "index": 21,
+  "magic title": "ritual",
+  "magic kind": "large",
+  "type": "himself",
+  "subtype": "himself",
+  "criterion": "health",
+  "impact": "reduce",
+  "value": 3
+ },
+ {
+  "index": 22,
+  "magic title": "massif",
+  "magic kind": "small",
+  "type": "quadrant",
+  "subtype": "ally",
+  "criterion": "diagram",
+  "impact": "increase",
+  "value": 1
+ },
+ {
+  "index": 23,
+  "magic title": "massif",
+  "magic kind": "medium",
+  "type": "quadrant",
+  "subtype": "ally",
+  "criterion": "diagram",
+  "impact": "increase",
+  "value": 2
+ },
+ {
+  "index": 24,
+  "magic title": "massif",
+  "magic kind": "large",
+  "type": "quadrant",
+  "subtype": "ally",
+  "criterion": "diagram",
+  "impact": "increase",
+  "value": 4
+ }
+]

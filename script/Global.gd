@@ -23,9 +23,11 @@ func _ready() -> void:
 
 
 func init_arr() -> void:
-	arr.answer = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-	arr.token = ["rune", "seal", "spell", "ritual", "massif"]
+	arr.mana = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+	arr.magic = ["rune", "seal", "spell", "ritual", "massif"]
 	arr.region = ["quadrant", "row", "col"]
+	arr.kind = ["small", "medium", "large"]
+	arr.area = ["center", "edge", "corner"]
 
 
 func init_num() -> void:
@@ -42,10 +44,17 @@ func init_num() -> void:
 	num.area.n = pow(num.region.n, 2)
 	num.area.col = num.area.n
 	num.area.row = num.area.n
+	
+	num.answer = {}
+	num.answer.n = 9
 
 
 func init_dict() -> void:
 	init_neighbor()
+	init_kind()
+	init_gem()
+	init_restriction()
+	init_titulus()
 
 
 func init_neighbor() -> void:
@@ -94,21 +103,102 @@ func init_neighbor() -> void:
 	]
 
 
-func init_blank() -> void:
-	dict.blank = {}
-	dict.blank.title = {}
+func init_kind() -> void:
+	dict.kind = {}
+	var steps = {}
+	steps[0] = [0, 2, 5]
+	steps[1] = [1, 4, 7]
+	steps[2] = [3, 6, 8]
+	var indexs = [0, 0, 0]
 	
-	var path = "res://asset/json/poupou_blank.json"
+	for _i in arr.mana.size():
+		var power = _i + 1
+		
+		for step in steps:
+			if steps[step].has(_i):
+				indexs[step] += 1
+		
+		dict.kind[power] = []
+		
+		for _j in indexs.size():
+			if indexs[_j] > 0:
+				var index = indexs[_j] - 1
+				var kind = arr.kind[index]
+				dict.kind[power].append(kind)
+
+
+func init_gem() -> void:
+	dict.gem = {}
+	dict.gem.magic = {}
+	var exceptions = ["magic"]
+	
+	var path = "res://asset/json/iwa_gem.json"
 	var array = load_data(path)
 	
-	for blank in array:
+	for gem in array:
 		var data = {}
 		
-		for key in blank:
-			if key != "title":
-				data[key] = blank[key]
+		for key in gem:
+			if !exceptions.has(key):
+				data[key] = gem[key]
+			
+		if !dict.gem.magic.has(gem.magic):
+			dict.gem.magic[gem.magic] = {}
+	
+		dict.gem.magic[gem.magic] = data
+
+
+func init_restriction() -> void:
+	dict.restriction = {}
+	dict.restriction.rank = {}
+	var exceptions = ["rank"]
+	
+	var path = "res://asset/json/iwa_restriction.json"
+	var array = load_data(path)
+	
+	for restriction in array:
+		restriction.rank = int(restriction.rank)
+		var data = {}
 		
-		dict.blank.title[blank.title] = data
+		for key in restriction:
+			if !exceptions.has(key):
+				data[key] = restriction[key]
+			
+		if !dict.restriction.rank.has(restriction.rank):
+			dict.restriction.rank[restriction.rank] = []
+	
+		dict.restriction.rank[restriction.rank].append(data)
+
+
+func init_titulus() -> void:
+	dict.titulus = {}
+	dict.titulus.index = {}
+	dict.titulus.magic = {}
+	var exceptions = ["index", "magic"]
+	
+	var path = "res://asset/json/iwa_titulus.json"
+	var array = load_data(path)
+	
+	for titulus in array:
+		var data = {}
+		
+		for key in titulus:
+			var words = key.split(" ")
+			
+			if exceptions.has(words[0]):
+				data[key] = titulus[key]
+			
+			if words[0] == "magic":
+				match words[1]:
+					"title":
+						if !dict.titulus.magic.has(titulus[key]):
+							dict.titulus.magic[titulus[key]] = {}
+					"kind":
+						if !dict.titulus.magic[titulus["magic title"]].has(titulus[key]):
+							dict.titulus.magic[titulus["magic title"]][titulus[key]] = []
+		
+		dict.titulus.index[titulus.index] = data
+		dict.titulus.magic[titulus["magic title"]][titulus["magic kind"]].append(titulus.index)
 
 
 func init_node() -> void:
@@ -126,7 +216,7 @@ func init_scene() -> void:
 	
 	scene.golem = load("res://scene/3/golem.tscn")
 	scene.token = load("res://scene/3/token.tscn")
-	
+	scene.gem = load("res://scene/3/gem.tscn")
 
 
 func init_vec():
@@ -150,8 +240,17 @@ func init_window_size():
 func init_color():
 	var h = 360.0
 	
-	color.defender = {}
-	color.defender.active = Color.from_hsv(120 / h, 0.6, 0.7)
+	color.magic = {}
+	color.magic.rune = Color.from_hsv(0 / h, 0.0, 0.7)
+	color.magic.seal = Color.from_hsv(0 / h, 0.6, 0.7)
+	color.magic.spell = Color.from_hsv(120 / h, 0.6, 0.7)
+	color.magic.ritual = Color.from_hsv(60 / h, 0.6, 0.7)
+	color.magic.massif = Color.from_hsv(210 / h, 0.6, 0.7)
+	
+	color.area = {}
+	color.area.center = Color.from_hsv(0 / h, 0.0, 0.2)
+	color.area.corner = Color.from_hsv(120 / h, 0.0, 0.8)
+	color.area.edge = Color.from_hsv(210 / h, 0.0, 0.5)
 
 
 func save(path_: String, data_: String):

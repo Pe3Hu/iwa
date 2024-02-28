@@ -29,8 +29,8 @@ func init_areas() -> void:
 	match type:
 		"quadrant":
 			var n = Global.num.area.n / Global.num.region.n
-			var x = index / Global.num.region.n
-			var y = index % Global.num.region.n
+			var x = index % Global.num.region.n
+			var y = index / Global.num.region.n
 			var grid = Vector2(x, y)
 			
 			for _i in n:
@@ -51,4 +51,26 @@ func add_area(grid_: Vector2) -> void:
 	var area = planet.get_area(grid_)
 	areas.append(area)
 	area.regions.append(self)
+	
+	if type == "quadrant":
+		var n = float(Global.num.area.n / Global.num.region.n)
+		var x = index % Global.num.region.n
+		var y = index / Global.num.region.n
+		var grid = grid_ - Vector2(x, y) * n
+		var corners = {}
+		corners.x = [0.0, n - 1]
+		corners.y = [0.0, n - 1]
+		var _type = null
+		grid.x = float(grid.x)
+		grid.y = float(grid.y)
+		
+		if corners.y.has(grid.y) or corners.x.has(grid.x):
+			if corners.y.has(grid.y) and corners.x.has(grid.x):
+				_type = "corner"
+			else:
+				_type = "edge"
+		else:
+			_type = "center"
+		
+		area.set_type(_type)
 #endregion

@@ -21,14 +21,14 @@ func init_basic_setting() -> void:
 
 
 func init_answers() -> void:
-	answers.columns = sqrt(Global.arr.answer.size())
+	answers.columns = sqrt(Global.num.answer.n)
 	
-	for _answer in Global.arr.answer:
+	for _i in Global.num.answer.n:
 		var input = {}
 		input.proprietor = self
 		input.type = "answer"
-		input.subtype = str(_answer)
-		input.value = _answer
+		input.value = _i + 1
+		input.subtype = str(input.value)
 		
 		var answer = Global.scene.answer.instantiate()
 		answers.add_child(answer)

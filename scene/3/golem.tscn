@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://wvtrityl05ur"]
+[gd_scene load_steps=6 format=3 uid="uid://wvtrityl05ur"]
 
 [ext_resource type="Script" path="res://scene/3/golem.gd" id="1_lamdb"]
 [ext_resource type="PackedScene" uid="uid://ciw38iqel0v5a" path="res://scene/0/icon.tscn" id="2_0wlb2"]
+[ext_resource type="PackedScene" uid="uid://cijfgbdi8yqwa" path="res://scene/3/token.tscn" id="2_a2oj0"]
+[ext_resource type="PackedScene" uid="uid://btfu4asff20a2" path="res://scene/3/health.tscn" id="3_pai73"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7paps"]
 
@@ -26,57 +28,39 @@ script = ExtResource("1_lamdb")
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_7paps")
 
-[node name="Enchantments" type="MarginContainer" parent="."]
+[node name="Gems" type="MarginContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="Diagram" type="VBoxContainer" parent="Enchantments"]
+[node name="Tokens" type="VBoxContainer" parent="Gems"]
 layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="Sacrifices" type="MarginContainer" parent="."]
-visible = false
+[node name="Traits" type="MarginContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 
-[node name="VBox" type="VBoxContainer" parent="Sacrifices"]
+[node name="Tokens" type="VBoxContainer" parent="Traits"]
 layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="Essences" type="VBoxContainer" parent="Sacrifices/VBox"]
+[node name="Titulus" parent="Traits/Tokens" instance=ExtResource("2_a2oj0")]
 layout_mode = 2
-theme_override_constants/separation = 0
-alignment = 1
 
-[node name="Threats" type="VBoxContainer" parent="Sacrifices/VBox"]
+[node name="Restriction" parent="Traits/Tokens" instance=ExtResource("2_a2oj0")]
 layout_mode = 2
-theme_override_constants/separation = 0
-alignment = 1
 
-[node name="Gifts" type="MarginContainer" parent="."]
-visible = false
+[node name="Mana" parent="." instance=ExtResource("2_a2oj0")]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 
-[node name="VBox" type="VBoxContainer" parent="Gifts"]
+[node name="Health" parent="." instance=ExtResource("3_pai73")]
 layout_mode = 2
-theme_override_constants/separation = 0
-alignment = 1
-
-[node name="Essences" type="VBoxContainer" parent="Gifts/VBox"]
-layout_mode = 2
-theme_override_constants/separation = 0
-alignment = 1
-
-[node name="Effects" type="VBoxContainer" parent="Gifts/VBox"]
-layout_mode = 2
-theme_override_constants/separation = 0
-alignment = 1
 
 [node name="Tags" type="MarginContainer" parent="."]
 visible = false

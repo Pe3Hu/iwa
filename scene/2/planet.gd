@@ -6,8 +6,10 @@ extends MarginContainer
 @onready var areas = $Areas
 
 var universe = null
+var gods = []
 var guesses = []
 var sectors = {}
+var extremes = {}
 #endregion
 
 
@@ -22,7 +24,7 @@ func set_attributes(input_: Dictionary) -> void:
 func init_basic_setting() -> void:
 	init_areas()
 	init_regions()
-	solution_search()
+	#solution_search()
 
 
 func init_areas() -> void:
@@ -38,20 +40,16 @@ func init_areas() -> void:
 			input.planet = self
 			input.grid = Vector2(_j, _i)
 			
-			if corners.y.has(_i) or corners.x.has(_j):
-				if corners.y.has(_i) and corners.x.has(_j):
-					input.type = "corner"
-				else:
-					input.type = "edge"
-			else:
-				input.type = "center"
-	
+			
 			var area = Global.scene.area.instantiate()
 			areas.add_child(area)
 			area.set_attributes(input)
 
 
 func init_regions() -> void:
+	for extreme in Global.arr.area:
+		extremes[extreme] = []
+	
 	for type in Global.arr.region:
 		sectors[type] = []
 		
@@ -71,6 +69,11 @@ func get_area(grid_: Vector2) -> MarginContainer:
 	var area = areas.get_child(index)
 	return area
 #endregion
+
+
+func add_god(god_: MarginContainer) -> void:
+	gods.append(god_)
+	god_.planet = self
 
 
 func solution_search() -> void:
@@ -101,3 +104,25 @@ func apply_answer_to_regions(area_: MarginContainer) -> void:
 		for area in region.areas:
 			if area_ != area:
 				area.question.set_incorrect_answer(value)
+
+
+func detect_areas_for_golem(golem_: MarginContainer) -> Array:
+	var restriction = golem_.get_restriction()
+	var options = []
+	
+	match restriction.type:
+		"area":
+			for area in extremes[restriction.subtype]:
+				if area.try_on_golem(golem_):
+					options.append(area)
+		"region":
+			var region = sectors[restriction.subtype][restriction.index]
+			
+			for area in region.areas:
+				if area.try_on_golem(golem_):
+					options.append(area)
+	
+	#for option in options:
+	#	option.recolor_based_on_type()
+	return options
+

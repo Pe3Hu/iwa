@@ -1,0 +1,32 @@
+[
+ {
+  "rank": 1,
+  "type": "region",
+  "subtype": "quadrant"
+ },
+ {
+  "rank": 1,
+  "type": "region",
+  "subtype": "row"
+ },
+ {
+  "rank": 1,
+  "type": "region",
+  "subtype": "col"
+ },
+ {
+  "rank": 1,
+  "type": "area",
+  "subtype": "center"
+ },
+ {
+  "rank": 2,
+  "type": "area",
+  "subtype": "corner"
+ },
+ {
+  "rank": 2,
+  "type": "area",
+  "subtype": "edge"
+ }
+]
