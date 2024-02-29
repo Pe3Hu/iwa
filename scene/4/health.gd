@@ -1,4 +1,4 @@
-extends "res://scene/3/token.gd"
+extends "res://scene/4/token.gd"
 
 
 var current = null
@@ -11,7 +11,7 @@ func set_maximum() -> void:
 
 
 func set_current(value_: int) -> void:
-	current = 0
+	current = value_
 	set_value(current)
 
 

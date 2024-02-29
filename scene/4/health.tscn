@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://btfu4asff20a2"]
+
+[ext_resource type="PackedScene" uid="uid://cijfgbdi8yqwa" path="res://scene/4/token.tscn" id="1_pglpy"]
+[ext_resource type="Script" path="res://scene/4/health.gd" id="2_ogt4q"]
+
+[node name="Health" instance=ExtResource("1_pglpy")]
+script = ExtResource("2_ogt4q")

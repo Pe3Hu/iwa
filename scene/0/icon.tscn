@@ -36,6 +36,15 @@ theme_override_fonts/font = ExtResource("2_k4dsr")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Text" type="Label" parent="."]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_k4dsr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 2
 expand_mode = 1

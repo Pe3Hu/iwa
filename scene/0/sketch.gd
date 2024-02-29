@@ -14,4 +14,6 @@ func _ready() -> void:
 	var god = cradle.pantheons.get_child(0).gods.get_child(0)
 	var planet = universe.planets.get_child(0)
 	planet.add_god(god)
-	god.start_conquest()
+	god = cradle.pantheons.get_child(1).gods.get_child(0)
+	planet.add_god(god)
+	planet.start_conquest()

@@ -1,0 +1,77 @@
+[
+ {
+  "title": "rune",
+  "kind": "small",
+  "weight": 5
+ },
+ {
+  "title": "rune",
+  "kind": "medium",
+  "weight": 10
+ },
+ {
+  "title": "rune",
+  "kind": "large",
+  "weight": 15
+ },
+ {
+  "title": "seal",
+  "kind": "small",
+  "weight": 6
+ },
+ {
+  "title": "seal",
+  "kind": "medium",
+  "weight": 9
+ },
+ {
+  "title": "seal",
+  "kind": "large",
+  "weight": 12
+ },
+ {
+  "title": "spell",
+  "kind": "small",
+  "weight": 2
+ },
+ {
+  "title": "spell",
+  "kind": "medium",
+  "weight": 6
+ },
+ {
+  "title": "spell",
+  "kind": "large",
+  "weight": 18
+ },
+ {
+  "title": "ritual",
+  "kind": "small",
+  "weight": 7
+ },
+ {
+  "title": "ritual",
+  "kind": "medium",
+  "weight": 8
+ },
+ {
+  "title": "ritual",
+  "kind": "large",
+  "weight": 9
+ },
+ {
+  "title": "massif",
+  "kind": "small",
+  "weight": 4
+ },
+ {
+  "title": "massif",
+  "kind": "medium",
+  "weight": 16
+ },
+ {
+  "title": "massif",
+  "kind": "large",
+  "weight": 32
+ }
+]

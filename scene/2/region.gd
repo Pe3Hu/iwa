@@ -8,6 +8,8 @@ var planet = null
 var type = null
 var index = null
 var areas = []
+var manas = []
+var gods = {}
 #endregion
 
 
@@ -21,8 +23,9 @@ func set_attributes(input_: Dictionary) -> void:
 
 
 func init_basic_setting() -> void:
-	init_areas()
 	planet.sectors[type].append(self)
+	init_areas()
+	manas.append_array(Global.arr.mana)
 
 
 func init_areas() -> void:
@@ -73,4 +76,54 @@ func add_area(grid_: Vector2) -> void:
 			_type = "center"
 		
 		area.set_type(_type)
+		area.quadrant = self
+		area.recolor_based_on_quadrant()
 #endregion
+
+
+func check_batch_manas(batch_: MarginContainer) -> bool:
+	for mana in batch_.manas:
+		if !manas.has(mana):
+			return false
+	
+	return true
+
+
+func find_all_combinations_for_batch(batch_: MarginContainer) -> void:
+	var pools = {}
+	
+	for golem in batch_.golems:
+		pools[golem] = get_ares_for_golem(golem)
+		
+		if pools[golem].size() == 0:
+			return
+	
+	var combinations = Global.get_unique_combinations(pools)
+	batch_.combinations.append_array(combinations)
+
+
+func get_ares_for_golem(golem_: MarginContainer) -> Array:
+	var result = []
+	
+	for area in areas:
+		if area.try_on_golem(golem_):
+			result.append(area)
+	
+	return result
+
+
+func get_equilibrium() -> void:
+	var datas = []
+	
+	for god in planet.gods:
+		if god.observatory.quadrants.has(self):
+			var data = {}
+			data.god = god
+			data.power = god.observatory.quadrants[self].power
+			datas.append(data)
+	
+	datas.sort_custom(func(a, b): return a.power > b.power)
+	var _index = planet.sectors.quadrant.find(self)
+	var winner = datas.front().god
+	
+	print([_index, winner.index])

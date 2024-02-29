@@ -57,7 +57,7 @@ func set_value(value_: Variant) -> void:
 
 
 func multiply_value(multiplier_: Variant) -> void:
-	var value = get_value() * multiplier_
-	value.set_number(value)
+	var _value = get_value() * multiplier_
+	value.set_number(_value)
 #endregion
 

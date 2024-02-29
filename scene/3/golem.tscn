@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scene/3/golem.gd" id="1_lamdb"]
 [ext_resource type="PackedScene" uid="uid://ciw38iqel0v5a" path="res://scene/0/icon.tscn" id="2_0wlb2"]
-[ext_resource type="PackedScene" uid="uid://cijfgbdi8yqwa" path="res://scene/3/token.tscn" id="2_a2oj0"]
-[ext_resource type="PackedScene" uid="uid://btfu4asff20a2" path="res://scene/3/health.tscn" id="3_pai73"]
+[ext_resource type="PackedScene" uid="uid://cijfgbdi8yqwa" path="res://scene/4/token.tscn" id="2_a2oj0"]
+[ext_resource type="PackedScene" uid="uid://btfu4asff20a2" path="res://scene/4/health.tscn" id="3_pai73"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7paps"]
 

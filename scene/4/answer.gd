@@ -1,4 +1,4 @@
-extends "res://scene/3/token.gd"
+extends "res://scene/4/token.gd"
 
 
 var status = null

@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b6xt38h3tpi5k"]
+[gd_scene load_steps=5 format=3 uid="uid://b6xt38h3tpi5k"]
 
 [ext_resource type="Script" path="res://scene/1/god.gd" id="1_ceqed"]
 [ext_resource type="PackedScene" uid="uid://dlqcp5swjoht" path="res://scene/3/cave.tscn" id="2_xrn7i"]
+[ext_resource type="PackedScene" uid="uid://c6ypg1jeguu61" path="res://scene/3/observatory.tscn" id="3_yci7o"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7paps"]
 
@@ -33,4 +34,7 @@ theme_override_constants/separation = 0
 alignment = 1
 
 [node name="Cave" parent="VBox" instance=ExtResource("2_xrn7i")]
+layout_mode = 2
+
+[node name="Observatory" parent="VBox" instance=ExtResource("3_yci7o")]
 layout_mode = 2

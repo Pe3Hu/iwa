@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dx2nuet38b2lb"]
+[gd_scene load_steps=4 format=3 uid="uid://dx2nuet38b2lb"]
 
 [ext_resource type="Script" path="res://scene/2/planet.gd" id="1_ictb4"]
+[ext_resource type="PackedScene" uid="uid://ciw38iqel0v5a" path="res://scene/0/icon.tscn" id="2_u6ues"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7paps"]
 
@@ -26,12 +27,34 @@ visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_7paps")
 
-[node name="Regions" type="GridContainer" parent="."]
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Icons" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Phase" parent="VBox/Icons" instance=ExtResource("2_u6ues")]
+layout_mode = 2
+
+[node name="Lap" parent="VBox/Icons" instance=ExtResource("2_u6ues")]
+layout_mode = 2
+
+[node name="Turn" parent="VBox/Icons" instance=ExtResource("2_u6ues")]
+layout_mode = 2
+
+[node name="Land" type="MarginContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="Regions" type="GridContainer" parent="VBox/Land"]
 layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 
-[node name="Areas" type="GridContainer" parent="."]
+[node name="Areas" type="GridContainer" parent="VBox/Land"]
 layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0

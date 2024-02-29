@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cijfgbdi8yqwa"]
 
-[ext_resource type="Script" path="res://scene/3/token.gd" id="1_tm7ay"]
+[ext_resource type="Script" path="res://scene/4/token.gd" id="1_tm7ay"]
 [ext_resource type="PackedScene" uid="uid://ciw38iqel0v5a" path="res://scene/0/icon.tscn" id="2_xmt25"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7paps"]

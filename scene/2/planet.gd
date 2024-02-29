@@ -2,14 +2,20 @@ extends MarginContainer
 
 
 #region var
-@onready var regions = $Regions
-@onready var areas = $Areas
+@onready var phase = $VBox/Icons/Phase
+@onready var lap = $VBox/Icons/Lap
+@onready var turn = $VBox/Icons/Turn
+@onready var regions = $VBox/Land/Regions
+@onready var areas = $VBox/Land/Areas
 
 var universe = null
 var gods = []
 var guesses = []
 var sectors = {}
 var extremes = {}
+var loser = null
+var winner = null
+var god = null
 #endregion
 
 
@@ -24,6 +30,7 @@ func set_attributes(input_: Dictionary) -> void:
 func init_basic_setting() -> void:
 	init_areas()
 	init_regions()
+	init_icons()
 	#solution_search()
 
 
@@ -68,6 +75,23 @@ func get_area(grid_: Vector2) -> MarginContainer:
 	var index = Global.num.area.n * grid_.y + grid_.x
 	var area = areas.get_child(index)
 	return area
+
+
+func init_icons() -> void:
+	var input = {}
+	input.type = "number"
+	input.subtype = 1
+	lap.set_attributes(input)
+	lap.custom_minimum_size = Vector2(Global.vec.size.token * 2)
+	
+	input.subtype = -1
+	turn.set_attributes(input)
+	turn.custom_minimum_size = Vector2(Global.vec.size.token * 2)
+	
+	input.type = "phase"
+	input.subtype = Global.arr.phase.back()
+	phase.set_attributes(input)
+	phase.custom_minimum_size = Vector2(Global.vec.size.token * 2)
 #endregion
 
 
@@ -101,6 +125,8 @@ func apply_answer_to_regions(area_: MarginContainer) -> void:
 	var value = area_.question.correct.get_value()
 	
 	for region in area_.regions:
+		region.manas.erase(value)
+		
 		for area in region.areas:
 			if area_ != area:
 				area.question.set_incorrect_answer(value)
@@ -125,4 +151,67 @@ func detect_areas_for_golem(golem_: MarginContainer) -> Array:
 	#for option in options:
 	#	option.recolor_based_on_type()
 	return options
+
+
+func start_conquest() -> void:
+	for _i in Global.num.phase.honoring - 2:
+		skip_all_phases()
+	
+	follow_phase()
+
+
+#region phase
+func skip_all_phases() -> void:
+	for _i in Global.num.phase.n:
+		follow_phase()
+
+
+func follow_phase() -> void:
+	if loser == null:
+		var index = Global.arr.phase.find(phase.subtype)
+		var shift = 1
+		index = (index + shift) % Global.arr.phase.size()
+		
+		phase.subtype = Global.arr.phase[index]
+		phase.update_image()
+		
+		if index == 0:
+			swap_god()
+		
+		turn.change_number(1)
+		
+		if turn.get_number() == Global.num.turn.n:
+			lap.change_number(1)
+			turn.set_number(0)
+		
+		var func_name = phase.subtype + "_" + "phase"
+		call(func_name)
+
+
+func honoring_phase() -> void:
+	if lap.get_number() == Global.num.phase.honoring:
+		for region in sectors.quadrant:
+			region.get_equilibrium()
+	
+		loser = false
+	else:
+		follow_phase()
+
+
+func molding_phase() -> void:
+	god.cave.init_batchs()
+
+
+func sorting_phase() -> void:
+	god.find_region_for_batch()
+
+
+func repositioning_phase() -> void:
+	god.cave.place_batch_golems()
+
+
+func swap_god() -> void:
+	var index = (gods.find(god) + 1) % gods.size()
+	god = gods[index]
+#endregion
 

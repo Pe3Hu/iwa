@@ -1,7 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://bym8be2s52syy"]
-
-[ext_resource type="PackedScene" uid="uid://cijfgbdi8yqwa" path="res://scene/3/token.tscn" id="1_lyiva"]
-[ext_resource type="Script" path="res://scene/3/gem.gd" id="2_gjwdf"]
-
-[node name="Gem" instance=ExtResource("1_lyiva")]
-script = ExtResource("2_gjwdf")

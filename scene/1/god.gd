@@ -3,9 +3,11 @@ extends MarginContainer
 
 #region vars
 @onready var cave = $VBox/Cave
+@onready var observatory = $VBox/Observatory
 
 var pantheon = null
 var planet = null
+var index = null
 #endregion
 
 
@@ -20,23 +22,44 @@ func init_basic_setting() -> void:
 	var input = {}
 	input.god = self
 	cave.set_attributes(input)
+	observatory.set_attributes(input)
+	index = int(Global.num.index.god)
+	Global.num.index.god += 1
 #endregion
 
 
-func start_conquest() -> void:
-	for _i in 2:
-		place_golem()
-
-
-func place_golem() -> void:
-	cave.add_golem()
-	var golem = cave.golems.get_child(0)
-	var areas = planet.detect_areas_for_golem(golem)
+func find_region_for_batch() -> void:
+	var batchs = {}
 	
-	if !areas.is_empty():
-		cave.golems.remove_child(golem)
-		var area = areas.pick_random()
-		area.set_golem(golem)
+	for batch in cave.batchs.get_children():
+		batch.combinations = []
+		
+		for region in batch.regions:
+			region.find_all_combinations_for_batch(batch)
+		
+		var n = batch.combinations.size()
+		
+		if n > 0:
+			batchs[batch] = n
+	
+	if !batchs.keys().is_empty():
+		cave.batch = Global.get_random_key(batchs)
+		cave.batch.set_areas_for_golems()
 	else:
-		cave.golems.remove_child(golem)
-		golem.queue_free()
+		pass
+
+
+#func place_golem() -> void:
+	#var batch = cave.batchs.get_child(0)
+	#var golem = batch.golems[0]
+	#var areas = planet.detect_areas_for_golem(golem)
+	#
+	#if !areas.is_empty():
+		#batch.golems.erase(golem)
+		#batch.remove_child(golem)
+		#var area = areas.pick_random()
+		#area.set_golem(golem)
+	#else:
+		#batch.golems.erase(golem)
+		#batch.remove_child(golem)
+		#golem.queue_free()

@@ -1,7 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://bq65c3m2sv2ru"]
-
-[ext_resource type="PackedScene" uid="uid://cijfgbdi8yqwa" path="res://scene/3/token.tscn" id="1_m8dj0"]
-[ext_resource type="Script" path="res://scene/2/answer.gd" id="2_6riig"]
-
-[node name="Answer" instance=ExtResource("1_m8dj0")]
-script = ExtResource("2_6riig")

@@ -2,9 +2,10 @@ extends MarginContainer
 
 
 #region var
-@onready var golems = $Golems
+@onready var batchs = $Batchs
 
 var god = null
+var batch = null
 #endregion
 
 
@@ -16,60 +17,37 @@ func set_attributes(input_: Dictionary) -> void:
 
 
 func init_basic_setting() -> void:
-	#init_golems()
+	#init_batchs()
 	pass
 
 
-func init_golems() -> void:
-	for _i in 1:
-		add_golem()
+func init_batchs() -> void:
+	for _i in 3:
+		add_batch()
 
 
-func add_golem() -> void:
+func reset_batchs() -> void:
+	batch = null
+	
+	while batchs.get_child_count() > 0:
+		var _batch = batchs.get_child(0)
+		batchs.remove_child(_batch)
+		_batch.queue_free()
+
+
+func add_batch() -> void:
 	var input = {}
 	input.cave = self
-	input.mana = Global.arr.mana.pick_random()
-	input.rank = 2
-	input.health = 10
-	roll_restriction(input)
-	roll_gems(input)
-	roll_titulus(input)
+	input.lap = god.planet.lap.get_number()
 	
-	var golem = Global.scene.golem.instantiate()
-	golems.add_child(golem)
-	golem.set_attributes(input)
-
-
-func roll_restriction(input_: Dictionary) -> void:
-	var options = Global.dict.restriction.rank[input_.rank]
-	input_.restriction = options.pick_random()
-	input_.restriction.index = null
-	
-	if input_.restriction.type == "region":
-		Global.rng.randomize()
-		input_.restriction.index = Global.rng.randi_range(0, Global.num.area.n)
-	
-	#input_.restriction.type = "region"
-	#input_.restriction.subtype = "quadrant"
-	#input_.restriction.index = 1
-
-
-func roll_gems(input_: Dictionary) -> void:
-	var kinds = Global.dict.kind[input_.mana]
-	var options = []
-	options.append_array(Global.arr.magic)
-	
-	input_.gems = {}
-	
-	for kind in kinds:
-		var option = options.pick_random()
-		input_.gems[option] = kind
-		options.erase(option)
-
-
-func roll_titulus(input_: Dictionary) -> void:
-	var magic = input_.gems.keys().front()
-	var kind = input_.gems[magic]
-	var options = Global.dict.titulus.magic[magic][kind]
-	input_.titulus = options.pick_random()
+	var _batch = Global.scene.batch.instantiate()
+	batchs.add_child(_batch)
+	_batch.set_attributes(input)
 #endregion
+
+
+func place_batch_golems() -> void:
+	if batch != null:
+		batch.place_golems_on_region()
+	
+	reset_batchs()

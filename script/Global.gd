@@ -28,11 +28,14 @@ func init_arr() -> void:
 	arr.region = ["quadrant", "row", "col"]
 	arr.kind = ["small", "medium", "large"]
 	arr.area = ["center", "edge", "corner"]
+	arr.order = ["first", "second", "third"]
+	arr.phase = ["honoring", "molding", "sorting", "repositioning"]
 
 
 func init_num() -> void:
 	num.index = {}
 	num.index.area = 0
+	num.index.god = 0
 	
 	num.answer = {}
 	num.answer.n = 9
@@ -47,6 +50,13 @@ func init_num() -> void:
 	
 	num.answer = {}
 	num.answer.n = 9
+	
+	num.turn = {}
+	num.turn.n = arr.phase.size() * 2
+	
+	num.phase = {}
+	num.phase.n = (arr.phase.size() - 1) * 2
+	num.phase.honoring = 2 * 5 + 1
 
 
 func init_dict() -> void:
@@ -55,6 +65,8 @@ func init_dict() -> void:
 	init_gem()
 	init_restriction()
 	init_titulus()
+	init_batch()
+	init_score()
 
 
 func init_neighbor() -> void:
@@ -201,6 +213,45 @@ func init_titulus() -> void:
 		dict.titulus.magic[titulus["magic title"]][titulus["magic kind"]].append(titulus.index)
 
 
+func init_batch() -> void:
+	dict.batch = {}
+	dict.batch.lap = {}
+	
+	var path = "res://asset/json/iwa_batch.json"
+	var array = load_data(path)
+	
+	for batch in array:
+		batch.lap = int(batch.lap)
+		
+		if !dict.batch.lap.has(batch.lap):
+			dict.batch.lap[batch.lap] = {}
+			dict.batch.lap[batch.lap + 1] = {}
+	
+		var manas = []
+		
+		for _mana in batch.manas.split(","):
+			manas.append(int(_mana))
+		
+		if component_uniqueness_check(manas):
+			dict.batch.lap[batch.lap][manas] = round(batch.weight)
+			dict.batch.lap[batch.lap + 1][manas] = 100 - round(batch.weight)
+
+
+func init_score() -> void:
+	dict.score = {}
+	dict.score.magic = {}
+	
+	var path = "res://asset/json/iwa_score.json"
+	var array = load_data(path)
+	
+	for score in array:
+		for key in score:
+			if !dict.score.magic.has(score.title):
+				dict.score.magic[score.title] = {}
+			
+			dict.score.magic[score.title][score.kind] = score.weight
+
+
 func init_node() -> void:
 	node.game = get_node("/root/Game")
 
@@ -212,11 +263,13 @@ func init_scene() -> void:
 	scene.planet = load("res://scene/2/planet.tscn")
 	scene.area = load("res://scene/2/area.tscn")
 	scene.region = load("res://scene/2/region.tscn")
-	scene.answer = load("res://scene/2/answer.tscn")
 	
+	scene.batch = load("res://scene/3/batch.tscn")
 	scene.golem = load("res://scene/3/golem.tscn")
-	scene.token = load("res://scene/3/token.tscn")
-	scene.gem = load("res://scene/3/gem.tscn")
+	
+	scene.token = load("res://scene/4/token.tscn")
+	scene.gem = load("res://scene/4/gem.tscn")
+	scene.answer = load("res://scene/4/answer.tscn")
 
 
 func init_vec():
@@ -226,6 +279,7 @@ func init_vec():
 	vec.size.token = Vector2(24, 24)
 	vec.size.area = Vector2(vec.size.token) * 3
 	vec.size.golem = Vector2(vec.size.area)
+	vec.size.batch = Vector2(vec.size.area * 2)
 	
 	init_window_size()
 
@@ -251,6 +305,10 @@ func init_color():
 	color.area.center = Color.from_hsv(0 / h, 0.0, 0.2)
 	color.area.corner = Color.from_hsv(120 / h, 0.0, 0.8)
 	color.area.edge = Color.from_hsv(210 / h, 0.0, 0.5)
+	
+	color.god = {}
+	color.god[0] = Color.from_hsv(0 / h, 0.0, 0.2)
+	color.god[1] = Color.from_hsv(210 / h, 0.0, 0.8)
 
 
 func save(path_: String, data_: String):
@@ -290,3 +348,66 @@ func get_random_key(dict_: Dictionary):
 	
 	print("!bug! index_r error in get_random_key func")
 	return null
+
+
+func component_uniqueness_check(components_: Array) -> bool:
+	var counters = {}
+	
+	for component in components_:
+		if !counters.has(component):
+			counters[component] = 0
+		
+		counters[component] += 1
+	
+	return components_.size() == counters.keys().size()
+
+
+func combination_uniqueness_check(combination_: Array) -> bool:
+	var counters = {}
+	
+	for area in combination_:
+		if !counters.has(area.index):
+			counters[area.index] = 0
+		
+		counters[area.index] += 1
+	
+	#if combination_.size() == counters.keys().size():
+		#print(counters)
+		#pass
+	
+	return combination_.size() == counters.keys().size()
+
+
+func get_all_combinations(pools_: Dictionary) -> Array:
+	var keys = pools_.keys()
+	var tree = {}
+	var roots = [[]]
+	
+	for key in pools_.keys():
+		var leaves = []
+		var pool = pools_[key]
+		
+		for root in roots:
+			for branch in pool:
+				var fruit = []
+				fruit.append_array(root)
+				fruit.append(branch)
+				tree[fruit] = {}
+				leaves.append(fruit)
+		
+		roots = []
+		roots.append_array(leaves)
+	
+	return roots
+
+
+func get_unique_combinations(pools_: Dictionary) -> Array:
+	var combinations = get_all_combinations(pools_)
+	var result = []
+	
+	for combination in combinations:
+		if combination_uniqueness_check(combination):
+			result.append(combination)
+	
+	return result
+
