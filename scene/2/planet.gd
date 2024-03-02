@@ -98,6 +98,7 @@ func init_icons() -> void:
 func add_god(god_: MarginContainer) -> void:
 	gods.append(god_)
 	god_.planet = self
+	god_.observatory.set_region_for_banners()
 
 
 func solution_search() -> void:
@@ -154,9 +155,11 @@ func detect_areas_for_golem(golem_: MarginContainer) -> Array:
 
 
 func start_conquest() -> void:
-	for _i in Global.num.phase.honoring - 2:
-		skip_all_phases()
+	#for _i in Global.num.phase.honoring - 2:
+	#	skip_all_phases()
 	
+	follow_phase()
+	follow_phase()
 	follow_phase()
 
 

@@ -3,7 +3,7 @@ extends MarginContainer
 
 #region vars
 @onready var bg = $BG
-@onready var gemTokens = $Gems/Tokens
+@onready var gems = $Gems/Tokens
 @onready var restriction = $Traits/Tokens/Restriction
 @onready var titulus = $Traits/Tokens/Titulus
 @onready var mana = $Mana
@@ -12,6 +12,7 @@ extends MarginContainer
 var batch = null
 var magic = null
 var area = null
+var banners = []
 #endregion
 
 
@@ -44,7 +45,7 @@ func init_enchantments(input_: Dictionary) -> void:
 		input.value = Global.dict.gem.magic[_magic][kind]
 		
 		var gem = Global.scene.token.instantiate()
-		gemTokens.add_child(gem)
+		gems.add_child(gem)
 		gem.set_attributes(input)
 
 
@@ -119,3 +120,18 @@ func get_restriction() -> Dictionary:
 	if Global.arr.area.has(result.subtype):
 		result.type = "area"
 	return result
+
+
+func set_area(area_: MarginContainer) -> void:
+	area = area_
+	
+	for banner in batch.cave.god.observatory.banners.get_children():
+		if banner.region.areas.has(area):
+			apply_banner(banner)
+
+
+func apply_banner(banner_: MarginContainer) -> void:
+	for gem in gems.get_children():
+		if banner_.gem.subtype == gem.subtype:
+			var value = banner_.gem.get_value()
+			gem.change_value(value)

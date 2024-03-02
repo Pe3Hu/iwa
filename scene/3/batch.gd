@@ -11,8 +11,9 @@ var lap = null
 var golems = []
 var manas = []
 var regions = []
-var combinations = []
+var combinations = {}
 var region = null
+var optimal = null
 #endregion
 
 
@@ -26,6 +27,8 @@ func set_attributes(input_: Dictionary) -> void:
 
 func init_basic_setting() -> void:
 	custom_minimum_size = Vector2(Global.vec.size.batch)
+	combinations.total = []
+	combinations.optimal = []
 	init_golems()
 	init_regions()
 
@@ -105,14 +108,45 @@ func init_regions() -> void:
 #endregion
 
 
-func set_areas_for_golems() -> void:
-	if !combinations.is_empty():
-		var combination = combinations.pick_random()
+func sort_combinations_based_on_banners() -> void:
+	var datas = []
+	
+	for combination in combinations.total:
+		var data = {}
+		data.combination = combination
+		data.weight = 0
 		
 		for _i in golems.size():
 			var golem = golems[_i]
 			var area = combination[_i]
-			golem.area = area
+			
+			for banner in cave.god.observatory.banners.get_children():
+				if banner.region.areas.has(area):
+					for gem in golem.gems.get_children():
+						if banner.gem.subtype == gem.subtype:
+							data.weight += 1
+							break
+		
+		datas.append(data)
+	
+	datas.sort_custom(func(a, b): return a.weight > b.weight)
+	optimal = datas.front().weight
+	
+	for data in datas:
+		if data.weight == optimal:
+			combinations.optimal.append(data.combination)
+		else:
+			break
+
+
+func set_areas_for_golems() -> void:
+	if !combinations.is_empty():
+		var combination = combinations.optimal.pick_random()
+		
+		for _i in golems.size():
+			var golem = golems[_i]
+			var area = combination[_i]
+			golem.set_area(area)
 
 
 func place_golems_on_region() -> void:

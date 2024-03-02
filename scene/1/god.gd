@@ -32,34 +32,23 @@ func find_region_for_batch() -> void:
 	var batchs = {}
 	
 	for batch in cave.batchs.get_children():
-		batch.combinations = []
+		#batch.combinations.total = []
+		#batch.combinations.optimal = []
+		#batch.optimal = null
 		
 		for region in batch.regions:
 			region.find_all_combinations_for_batch(batch)
 		
-		var n = batch.combinations.size()
+		#var n = batch.optimal#
 		
-		if n > 0:
-			batchs[batch] = n
+		if batch.combinations.total.size() > 0:
+			batch.sort_combinations_based_on_banners()
+			batchs[batch] = batch.optimal
 	
 	if !batchs.keys().is_empty():
+		print(batchs)
 		cave.batch = Global.get_random_key(batchs)
 		cave.batch.set_areas_for_golems()
+		print(cave.batch.optimal)
 	else:
 		pass
-
-
-#func place_golem() -> void:
-	#var batch = cave.batchs.get_child(0)
-	#var golem = batch.golems[0]
-	#var areas = planet.detect_areas_for_golem(golem)
-	#
-	#if !areas.is_empty():
-		#batch.golems.erase(golem)
-		#batch.remove_child(golem)
-		#var area = areas.pick_random()
-		#area.set_golem(golem)
-	#else:
-		#batch.golems.erase(golem)
-		#batch.remove_child(golem)
-		#golem.queue_free()

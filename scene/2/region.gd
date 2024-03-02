@@ -99,7 +99,7 @@ func find_all_combinations_for_batch(batch_: MarginContainer) -> void:
 			return
 	
 	var combinations = Global.get_unique_combinations(pools)
-	batch_.combinations.append_array(combinations)
+	batch_.combinations.total.append_array(combinations) 
 
 
 func get_ares_for_golem(golem_: MarginContainer) -> Array:

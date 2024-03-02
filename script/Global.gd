@@ -23,6 +23,7 @@ func _ready() -> void:
 
 
 func init_arr() -> void:
+	arr.index = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 	arr.mana = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 	arr.magic = ["rune", "seal", "spell", "ritual", "massif"]
 	arr.region = ["quadrant", "row", "col"]
@@ -57,6 +58,9 @@ func init_num() -> void:
 	num.phase = {}
 	num.phase.n = (arr.phase.size() - 1) * 2
 	num.phase.honoring = 2 * 5 + 1
+	
+	num.banner = {}
+	num.banner.n = 3
 
 
 func init_dict() -> void:
@@ -140,6 +144,8 @@ func init_kind() -> void:
 
 
 func init_gem() -> void:
+	dict.banner = {}
+	dict.banner.magic = {}
 	dict.gem = {}
 	dict.gem.magic = {}
 	var exceptions = ["magic"]
@@ -156,8 +162,16 @@ func init_gem() -> void:
 			
 		if !dict.gem.magic.has(gem.magic):
 			dict.gem.magic[gem.magic] = {}
+			
+		if !dict.banner.magic.has(gem.magic):
+			dict.banner.magic[gem.magic] = 0
 	
 		dict.gem.magic[gem.magic] = data
+		
+		for key in data:
+			dict.banner.magic[gem.magic] += data[key]
+		
+		dict.banner.magic[gem.magic] = ceil(dict.banner.magic[gem.magic] / (data.keys().size() * 2))
 
 
 func init_restriction() -> void:
@@ -266,6 +280,7 @@ func init_scene() -> void:
 	
 	scene.batch = load("res://scene/3/batch.tscn")
 	scene.golem = load("res://scene/3/golem.tscn")
+	scene.banner = load("res://scene/3/banner.tscn")
 	
 	scene.token = load("res://scene/4/token.tscn")
 	scene.gem = load("res://scene/4/gem.tscn")
@@ -280,6 +295,8 @@ func init_vec():
 	vec.size.area = Vector2(vec.size.token) * 3
 	vec.size.golem = Vector2(vec.size.area)
 	vec.size.batch = Vector2(vec.size.area * 2)
+	vec.size.cave = Vector2(vec.size.batch * 2)
+	vec.size.banner = Vector2(vec.size.area)
 	
 	init_window_size()
 

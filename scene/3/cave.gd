@@ -17,8 +17,7 @@ func set_attributes(input_: Dictionary) -> void:
 
 
 func init_basic_setting() -> void:
-	#init_batchs()
-	pass
+	custom_minimum_size = Vector2(Global.vec.size.cave)
 
 
 func init_batchs() -> void:
@@ -50,4 +49,4 @@ func place_batch_golems() -> void:
 	if batch != null:
 		batch.place_golems_on_region()
 	
-	reset_batchs()
+	#reset_batchs()
